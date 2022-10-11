@@ -9,11 +9,15 @@ module.exports = {
         },
         neutral: {
           black: "hsl(0, 0%, 0%)",
-          "Dark-gray": "hsl(0, 0%, 48%)",
+          "dark-gray": "hsl(0, 0%, 48%)",
         },
       },
       fontFamily: {
         commissioner: ["Commissioner", "sans-serif", "monospace"],
+      },
+      backgroundImage: {
+        "mobile-hero": "url('images/image-hero-mobile.jpg')",
+        "desktop-hero": "url('images/image-hero-desktop.jpg')",
       },
     },
   },
