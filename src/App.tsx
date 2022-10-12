@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 
+import Header from "./Components/Header";
+
 function App() {
   const [bookmarked, setBookmarked] = useState<boolean>(false);
+  const [navbarModal, toggleNavbarModal] = useState<boolean>(false);
 
   const bookmarkToLocalStorage = () => {
     const bookmarked = JSON.parse(localStorage.getItem("bookmarked") || "[]");
@@ -22,23 +25,9 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
-      <header className="flex justify-between items-start px-6 py-9 h-80 bg-mobile-hero bg-cover brightness-90 border-2 border-primary-moderate-cyan">
-        <div className="flex justify-between w-full items-center">
-          <img alt="" src="images/logo.svg" />
-          <nav>
-            <button className="justify-self-center lg:hidden">
-              <img
-                alt=""
-                className="justify-self-center"
-                src="images/icon-hamburger.svg"
-              />
-            </button>
-          </nav>
-        </div>
-      </header>
-
-      <main className="mx-8 mt-[-35px] rounded-lg shadow-lg bg-slate-100 brightness-100">
+    <div className={navbarModal ? "App" : "App"}>
+      <Header navbarModal={navbarModal} toggleNavbarModal={toggleNavbarModal} />
+      <main className="relative z-10 mx-8 mt-[-35px] rounded-lg shadow-lg bg-slate-100">
         <header className="flex flex-col px-5 gap-5 items-center ">
           <div className="mt-[-30px] max-w-max">
             <img alt="" src="images/logo-mastercraft.svg" srcSet="" />
@@ -63,12 +52,11 @@ function App() {
               }
               onClick={() => bookmarkToLocalStorage()}
             >
-              {/* <img alt="" src="images/icon-bookmark.svg" /> */}
-              BTN CTA
+              <img alt="" src="images/icon-bookmark.svg" />
+              {/* BTN CTA */}
             </button>
           </div>
         </header>
-        asd
       </main>
     </div>
   );
