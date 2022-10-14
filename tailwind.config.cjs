@@ -5,7 +5,7 @@ module.exports = {
       colors: {
         primary: {
           "moderate-cyan": "hsl(176, 50%, 47%)",
-          "darl-cyan": "hsl(176, 72%, 28%)",
+          "dark-cyan": "hsl(176, 72%, 28%)",
         },
         neutral: {
           black: "hsl(0, 0%, 0%)",
@@ -18,6 +18,10 @@ module.exports = {
       backgroundImage: {
         "mobile-hero": "url('images/image-hero-mobile.jpg')",
         "desktop-hero": "url('images/image-hero-desktop.jpg')",
+      },
+      boxShadow: {
+        modal: "0 0 150px 150px rgba(0, 0, 0, 0.4)",
+        hero: "7px -22px 35px 42px rgba(0,0,0,0.76)",
       },
     },
   },
