@@ -61,15 +61,22 @@ function App() {
             <button className="px-9 bg-primary-moderate-cyan rounded-3xl text-slate-50 text-lg font-bold">
               Back this project
             </button>
-            <button
-              className={
-                bookmarked
-                  ? "invert-[.33] sepia hue-rotate-[127deg] brightness-95 contrast-[.91] rounded-full "
-                  : "rounded-full"
-              }
-              onClick={() => bookmarkToLocalStorage()}
-            >
-              <img alt="" src="images/icon-bookmark.svg" />
+            <button onClick={() => bookmarkToLocalStorage()}>
+              <svg height="56" width="56" xmlns="http://www.w3.org/2000/svg">
+                <g fill="none" fillRule="evenodd">
+                  <circle
+                    className="text-lg transition-colors"
+                    cx="28"
+                    cy="28"
+                    fill={bookmarked ? "hsl(176, 72%, 28%)" : "#2F2F2F"}
+                    r="28"
+                  />
+                  <path
+                    d="M23 19v18l5-5.058L33 37V19z"
+                    fill={bookmarked ? "hsl(176, 50%, 47%)" : "#B1B1B1"}
+                  />
+                </g>
+              </svg>
             </button>
           </div>
         </header>
