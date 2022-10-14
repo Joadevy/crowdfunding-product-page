@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 
 import Header from "./Components/Header";
+import StatCard, { Stat } from "./Components/StatCard";
 
 function App() {
   const [bookmarked, setBookmarked] = useState<boolean>(false);
   const [navbarModal, toggleNavbarModal] = useState<boolean>(false);
+  const [data, setData] = useState<Stat[]>([]);
+  const [status, setStatus] = useState<"loading" | "success">("loading");
 
   const bookmarkToLocalStorage = () => {
     const bookmarked = JSON.parse(localStorage.getItem("bookmarked") || "[]");
@@ -22,13 +25,27 @@ function App() {
     const bookmarked = JSON.parse(localStorage.getItem("bookmarked") || "[]");
 
     if (bookmarked === true) setBookmarked(true);
+
+    requestData();
   }, []);
+
+  const requestData = async () => {
+    const data = await fetch("data.json");
+    const res = await data.json();
+
+    if (res) {
+      setData(res);
+      setStatus("success");
+    }
+  };
+
+  if (status === "loading") return <h2>Loading...</h2>;
 
   return (
     <div className={navbarModal ? "App" : "App"}>
       <Header navbarModal={navbarModal} toggleNavbarModal={toggleNavbarModal} />
-      <main className="relative z-10 mx-8 mt-[-35px] rounded-lg shadow-lg bg-slate-100">
-        <header className="flex flex-col px-5 gap-5 items-center ">
+      <main className="relative flex flex-col gap-10 mb-10">
+        <header className="mx-8 shadow-md mt-[-35px] flex flex-col px-5 pb-7 gap-5 items-center rounded-lg bg-slate-100">
           <div className="mt-[-30px] max-w-max">
             <img alt="" src="images/logo-mastercraft.svg" srcSet="" />
           </div>
@@ -47,16 +64,21 @@ function App() {
             <button
               className={
                 bookmarked
-                  ? "bg-primary-moderate-cyan rounded-full"
-                  : "bg-red-500 rounded-full"
+                  ? "invert-[.33] sepia hue-rotate-[127deg] brightness-95 contrast-[.91] rounded-full "
+                  : "rounded-full"
               }
               onClick={() => bookmarkToLocalStorage()}
             >
               <img alt="" src="images/icon-bookmark.svg" />
-              {/* BTN CTA */}
             </button>
           </div>
         </header>
+
+        <article className="mx-8 bg-slate-100 shadow-md p-5 flex flex-col gap-8 items-center justify-center">
+          {data.map((element) => (
+            <StatCard key={element.data} stats={element} />
+          ))}
+        </article>
       </main>
     </div>
   );
