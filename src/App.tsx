@@ -1,13 +1,19 @@
 import { useEffect, useState } from "react";
 
 import Header from "./Components/Header";
-import StatCard, { Stat } from "./Components/StatCard";
+import StatCard from "./Components/StatCard";
+import { infoBackers } from "./types";
 
 function App() {
   const [bookmarked, setBookmarked] = useState<boolean>(false);
   const [navbarModal, toggleNavbarModal] = useState<boolean>(false);
-  const [data, setData] = useState<Stat[]>([]);
+  const [data, setData] = useState<infoBackers>({
+    amountBacked: 0,
+    totalBackers: 0,
+    daysLeft: 0,
+  });
   const [status, setStatus] = useState<"loading" | "success">("loading");
+  const [amountBacked, setAmountBacked] = useState<number>(0);
 
   const bookmarkToLocalStorage = () => {
     const bookmarked = JSON.parse(localStorage.getItem("bookmarked") || "[]");
@@ -35,6 +41,7 @@ function App() {
 
     if (res) {
       setData(res);
+      setAmountBacked(res.amountBacked);
       setStatus("success");
     }
   };
@@ -82,9 +89,15 @@ function App() {
         </header>
 
         <article className="mx-8 bg-slate-100 shadow-md p-5 flex flex-col gap-8 items-center justify-center">
-          {data.map((element) => (
-            <StatCard key={element.data} stats={element} />
-          ))}
+          <StatCard data={amountBacked} desc="of $100,000 backed" />
+          <StatCard data={data.totalBackers} desc="total backers" />
+          <StatCard data={data.daysLeft} desc="days left" />
+          <div className="rounded-xl bg-slate-200 w-full h-4">
+            <div
+              className="bg-primary-moderate-cyan h-4 rounded-xl"
+              style={{ width: `${(amountBacked * 100) / 100000}%` }}
+            />
+          </div>
         </article>
       </main>
     </div>

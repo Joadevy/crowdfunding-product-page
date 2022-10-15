@@ -1,17 +1,7 @@
 import type { FC } from "react";
+import type { Stat } from "../types";
 
-export type Stat = {
-  data: string;
-  desc: string;
-};
-
-type props = {
-  stats: Stat;
-};
-
-const StatCard: FC<props> = ({ stats }) => {
-  const { data, desc } = stats;
-
+const StatCard: FC<Stat> = ({ data, desc }) => {
   return (
     <div className="text-center">
       <h2 className="font-bold text-4xl">{data}</h2>

@@ -1,14 +1,5 @@
-[
-  {
-    "data": "$89,914",
-    "desc": "of $100.000 backed"
-  },
-  {
-    "data": "5,007",
-    "desc": "total backers"
-  },
-  {
-    "data": "56",
-    "desc": "days left"
-  }
-]
+{
+  "amountBacked": 89914,
+  "totalBackers": 5007,
+  "daysLeft": 56
+}
