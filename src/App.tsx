@@ -17,6 +17,7 @@ function App() {
   const [pledges, setPledges] = useState<infoReward[]>([]);
   const [status, setStatus] = useState<"loading" | "success">("loading");
   const [amountBacked, setAmountBacked] = useState<number>(0);
+  const [totalBackers, setTotalBackers] = useState<number>(0);
 
   const bookmarkToLocalStorage = () => {
     const bookmarked = JSON.parse(localStorage.getItem("bookmarked") || "[]");
@@ -48,6 +49,7 @@ function App() {
       setPledges(dataPledges);
       setData(dataRes);
       setAmountBacked(dataRes.amountBacked);
+      setTotalBackers(dataRes.totalBackers);
       setStatus("success");
     }
   };
@@ -96,7 +98,7 @@ function App() {
 
         <article className="bg-slate-100 shadow-md py-5 flex flex-col gap-8 items-center justify-center">
           <StatCard data={amountBacked} desc="of $100,000 backed" />
-          <StatCard data={data.totalBackers} desc="total backers" />
+          <StatCard data={totalBackers} desc="total backers" />
           <StatCard data={data.daysLeft} desc="days left" />
           <div className="rounded-xl bg-slate-200 w-full h-4">
             <div
