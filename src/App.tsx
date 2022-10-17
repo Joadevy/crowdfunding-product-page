@@ -31,6 +31,24 @@ function App() {
     }
   };
 
+  const addBacker = () => {
+    if (amountBacked !== 100000) setTotalBackers(totalBackers + 1);
+  };
+
+  const addAmountBacked = (amount: number) => {
+    if (amountBacked + amount <= 100000) {
+      setAmountBacked(amountBacked + amount);
+
+      return true;
+    } else if (amountBacked !== 100000) {
+      setAmountBacked(100000);
+
+      return true;
+    }
+
+    return false;
+  };
+
   useEffect(() => {
     const bookmarked = JSON.parse(localStorage.getItem("bookmarked") || "[]");
 
@@ -124,7 +142,13 @@ function App() {
           </p>
           <div className="mt-10 flex flex-col gap-5">
             {pledges.map((pledge: infoReward) => (
-              <Reward key={pledge.title} reward={pledge} />
+              <Reward
+                key={pledge.title}
+                addBacker={addBacker}
+                increaseAmount={addAmountBacked}
+                pledges={pledges}
+                reward={pledge}
+              />
             ))}
           </div>
         </article>

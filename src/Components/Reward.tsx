@@ -1,6 +1,7 @@
 import { FC, useState } from "react";
 
 import Modal from "./Moda";
+import { RewardSelect } from "./RewardSelect";
 
 export type infoReward = {
   title: string;
@@ -9,17 +10,34 @@ export type infoReward = {
   amount: number;
 };
 
-type props = { reward: infoReward };
+type props = {
+  reward: infoReward;
+  addBacker: () => void;
+  increaseAmount: (_amount: number) => boolean;
+  pledges: infoReward[];
+};
 
-const Reward: FC<props> = ({ reward }) => {
+const Reward: FC<props> = ({ reward, addBacker, increaseAmount, pledges }) => {
   const { title, pledge, desc, amount } = reward;
   const [showModal, toggleModal] = useState<boolean>(false);
+  const [stock, setStock] = useState<number>(amount);
+
+  const updateStock = () => {
+    setStock(stock - 1);
+  };
+
+  const addPledge = (amount: number) => {
+    if (increaseAmount(amount)) {
+      addBacker();
+      updateStock();
+    }
+  };
 
   return (
     <div
       className={
         "relative shadow rounded-lg border-2 p-7 flex flex-col gap-7 " +
-        (amount ? "" : "grayscale")
+        (stock ? "" : "grayscale")
       }
     >
       <header>
@@ -30,30 +48,52 @@ const Reward: FC<props> = ({ reward }) => {
       </header>
       <p className="text-neutral-dark-gray text-lg font-normal">{desc}</p>
       <p className="text-neutral-dark-gray flex items-center gap-2 text-xl">
-        <span className="text-neutral-black text-4xl font-bold">{amount}</span>{" "}
+        <span className="text-neutral-black text-4xl font-bold">{stock}</span>{" "}
         left
       </p>
       <button
         className="px-6 py-3 w-2/3 bg-primary-moderate-cyan rounded-3xl text-slate-50 text-lg font-bold"
-        onClick={amount ? () => toggleModal(true) : () => null}
-        onKeyPress={amount ? () => toggleModal(true) : () => null}
+        onClick={stock ? () => toggleModal(true) : () => null}
+        onKeyPress={stock ? () => toggleModal(true) : () => null}
       >
-        {amount ? "Select Reward" : "Out of Stock"}
+        {stock ? "Select Reward" : "Out of Stock"}
       </button>
 
       {showModal ? (
-        // This can be a component separated like RewardSelection.
         <Modal>
-          <div className="fixed top-0 w-full h-full bg-[rgba(0,0,0,0.5)]">
-            <div className="z-10 relative border-2 border-red-500 bg-slate-50 h-72 m-4">
-              <p>MODAL TEST</p>
+          <div className="fixed top-0 w-full h-full bg-[rgba(0,0,0,0.5)] overflow-y-auto">
+            <article className="bg-slate-50 p-6 m-4 absolute top-32 bottom-4 rounded-lg overflow-y-scroll">
+              <h2 className="font-bold text-2xl mb-2">Back this project</h2>
+              <p className="text-neutral-dark-gray text-lg mb-4">
+                Want to support us in bringing Mastercraft Bamboo Monitor Riser
+                out in the world?
+              </p>
               <button
+                className="absolute top-6 right-6"
                 onClick={() => toggleModal(false)}
                 onKeyPress={() => toggleModal(false)}
               >
-                X
+                <img alt="" src="images/icon-close-modal.svg" />
               </button>
-            </div>
+              <div>
+                <RewardSelect
+                  addPledge={addPledge}
+                  desc={
+                    "Choose to support us without a reward if you simply believe in our project. As a backer, you will be signed up to receive product updates via email."
+                  }
+                  reward={false}
+                  title={"Piedge with no reward"}
+                />
+                <RewardSelect
+                  addPledge={addPledge}
+                  desc={
+                    "Choose to support us without a reward if you simply believe in our project. As a backer, you will be signed up to receive product updates via email."
+                  }
+                  reward={false}
+                  title={"Piedge with no reward"}
+                />
+              </div>
+            </article>
           </div>
         </Modal>
       ) : null}
