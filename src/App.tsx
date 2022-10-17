@@ -72,6 +72,32 @@ function App() {
     }
   };
 
+  const updateStock = (id: number) => {
+    if (pledges[id].amount) {
+      let pledgesUpdated = pledges.map((pledge) => {
+        if (pledge.id === id) {
+          pledge.amount--;
+          console.log(pledge);
+        }
+
+        return pledge;
+      });
+
+      setPledges(pledgesUpdated);
+      console.log(pledges);
+    }
+  };
+
+  const addPledge = (idPledge: number, amount: number) => {
+    for (let pledge of pledges) {
+      if (pledge.id === idPledge && addAmountBacked(amount)) {
+        addBacker();
+        updateStock(idPledge);
+        //   updateStock();
+      }
+    }
+  };
+
   if (status === "loading") return <h2>Loading...</h2>;
 
   return (
@@ -143,13 +169,14 @@ function App() {
           <div className="mt-10 flex flex-col gap-5">
             {pledges.map((pledge: infoReward) => (
               <Reward
-                key={pledge.title}
+                key={pledge.id}
                 addBacker={addBacker}
                 increaseAmount={addAmountBacked}
-                pledges={pledges}
+                // pledges={pledges}
                 reward={pledge}
               />
             ))}
+            <button onClick={() => addPledge(1, 5000)}>AGREGAR</button>
           </div>
         </article>
       </main>

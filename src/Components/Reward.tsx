@@ -8,16 +8,17 @@ export type infoReward = {
   pledge: number;
   desc: string;
   amount: number;
+  id: number;
 };
 
 type props = {
   reward: infoReward;
   addBacker: () => void;
   increaseAmount: (_amount: number) => boolean;
-  pledges: infoReward[];
+  // pledges: infoReward[];
 };
 
-const Reward: FC<props> = ({ reward, addBacker, increaseAmount, pledges }) => {
+const Reward: FC<props> = ({ reward, addBacker, increaseAmount }) => {
   const { title, pledge, desc, amount } = reward;
   const [showModal, toggleModal] = useState<boolean>(false);
   const [stock, setStock] = useState<number>(amount);
@@ -63,25 +64,26 @@ const Reward: FC<props> = ({ reward, addBacker, increaseAmount, pledges }) => {
         <Modal>
           <div className="fixed top-0 w-full h-full bg-[rgba(0,0,0,0.5)] overflow-y-auto">
             <article className="bg-slate-50 p-6 m-4 absolute top-32 bottom-4 rounded-lg overflow-y-scroll">
-              <h2 className="font-bold text-2xl mb-2">Back this project</h2>
-              <p className="text-neutral-dark-gray text-lg mb-4">
+              <h2 className="font-bold text-xl mb-4">Back this project</h2>
+              <p className="text-neutral-dark-gray text-md mb-8">
                 Want to support us in bringing Mastercraft Bamboo Monitor Riser
                 out in the world?
               </p>
               <button
-                className="absolute top-6 right-6"
+                className="absolute top-8 right-8"
                 onClick={() => toggleModal(false)}
                 onKeyPress={() => toggleModal(false)}
               >
                 <img alt="" src="images/icon-close-modal.svg" />
               </button>
-              <div>
+              <div className="flex flex-col gap-8">
                 <RewardSelect
                   addPledge={addPledge}
                   desc={
                     "Choose to support us without a reward if you simply believe in our project. As a backer, you will be signed up to receive product updates via email."
                   }
                   reward={false}
+                  selected={false}
                   title={"Piedge with no reward"}
                 />
                 <RewardSelect
@@ -90,6 +92,7 @@ const Reward: FC<props> = ({ reward, addBacker, increaseAmount, pledges }) => {
                     "Choose to support us without a reward if you simply believe in our project. As a backer, you will be signed up to receive product updates via email."
                   }
                   reward={false}
+                  selected={false}
                   title={"Piedge with no reward"}
                 />
               </div>
