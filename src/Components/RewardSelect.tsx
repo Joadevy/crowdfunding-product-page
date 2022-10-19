@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, MouseEvent, useState } from "react";
 
 type props = {
   title: string;
@@ -26,9 +26,19 @@ export const RewardSelect: FC<props> = ({
   id,
 }) => {
   const [isSelected, toggleSelected] = useState<boolean>(false);
+  const [value, setValue] = useState<number>(pledge!);
 
   const handleSelect = () => {
     toggleSelected(!isSelected);
+  };
+
+  const handleSubmit = (e: MouseEvent) => {
+    if (value >= pledge! || !pledge) {
+      e.preventDefault();
+      console.log(value);
+      addPledge(id, value);
+      toggleModal();
+    }
   };
 
   return (
@@ -66,22 +76,24 @@ export const RewardSelect: FC<props> = ({
           <hr className="border-1 my-6 border-neutral-dark-gray" />
           <h3 className="text-neutral-dark-gray text-lg">Enter your pledge</h3>
           <form
-            action="
+            action="/
             "
-            className="flex gap-5 border-2 border-black"
+            className="flex gap-5"
           >
             <input
+              className="w-24 text-center outline-primary-moderate-cyan"
               defaultValue={pledge}
               max={5000}
               min={pledge}
               type={"number"}
+              onChange={(e) => setValue(parseInt(e.target.value))}
             />
             <input
               className="border-2 bg-primary-moderate-cyan"
               id="continue"
               type="submit"
               value="CONTINUE"
-              onClick={() => (addPledge(id, 1000), toggleModal())}
+              onClick={(e) => handleSubmit(e)}
             />
           </form>
         </footer>
