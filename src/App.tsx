@@ -19,6 +19,29 @@ function App() {
   const [amountBacked, setAmountBacked] = useState<number>(0);
   const [totalBackers, setTotalBackers] = useState<number>(0);
 
+  useEffect(() => {
+    const bookmarked = JSON.parse(localStorage.getItem("bookmarked") || "[]");
+
+    if (bookmarked === true) setBookmarked(true);
+
+    requestData();
+  }, []);
+
+  const requestData = async () => {
+    const data = await fetch("data.json");
+    const dataRes = await data.json();
+    const pledges = await fetch("pledges.json");
+    const dataPledges = await pledges.json();
+
+    if (dataRes && dataPledges) {
+      setPledges(dataPledges);
+      setData(dataRes);
+      setAmountBacked(dataRes.amountBacked);
+      setTotalBackers(dataRes.totalBackers);
+      setStatus("success");
+    }
+  };
+
   const bookmarkToLocalStorage = () => {
     const bookmarked = JSON.parse(localStorage.getItem("bookmarked") || "[]");
 
@@ -49,51 +72,28 @@ function App() {
     return false;
   };
 
-  useEffect(() => {
-    const bookmarked = JSON.parse(localStorage.getItem("bookmarked") || "[]");
-
-    if (bookmarked === true) setBookmarked(true);
-
-    requestData();
-  }, []);
-
-  const requestData = async () => {
-    const data = await fetch("data.json");
-    const dataRes = await data.json();
-    const pledges = await fetch("pledges.json");
-    const dataPledges = await pledges.json();
-
-    if (dataRes && dataPledges) {
-      setPledges(dataPledges);
-      setData(dataRes);
-      setAmountBacked(dataRes.amountBacked);
-      setTotalBackers(dataRes.totalBackers);
-      setStatus("success");
-    }
-  };
-
   const updateStock = (id: number) => {
-    if (pledges[id].amount) {
-      let pledgesUpdated = pledges.map((pledge) => {
-        if (pledge.id === id) {
-          pledge.amount--;
-          console.log(pledge);
-        }
+    let pledgesUpdated = pledges.map((pledge) => {
+      if (pledge.id === id && pledge.amount) {
+        pledge.amount--;
+      }
 
-        return pledge;
-      });
+      return pledge;
+    });
 
-      setPledges(pledgesUpdated);
-      console.log(pledges);
-    }
+    setPledges(pledgesUpdated);
   };
 
   const addPledge = (idPledge: number, amount: number) => {
-    for (let pledge of pledges) {
-      if (pledge.id === idPledge && addAmountBacked(amount)) {
-        addBacker();
-        updateStock(idPledge);
-        //   updateStock();
+    // Pledge with id = 0 doesn't have reward so doesn't need to update stock
+    if (idPledge === 0 && addAmountBacked(amount)) {
+      addBacker();
+    } else {
+      for (let pledge of pledges) {
+        if (pledge.id === idPledge && addAmountBacked(amount)) {
+          addBacker();
+          updateStock(idPledge);
+        }
       }
     }
   };
@@ -170,13 +170,11 @@ function App() {
             {pledges.map((pledge: infoReward) => (
               <Reward
                 key={pledge.id}
-                addBacker={addBacker}
-                increaseAmount={addAmountBacked}
-                // pledges={pledges}
+                addPledge={addPledge}
+                pledges={pledges}
                 reward={pledge}
               />
             ))}
-            <button onClick={() => addPledge(1, 5000)}>AGREGAR</button>
           </div>
         </article>
       </main>

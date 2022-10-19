@@ -13,32 +13,23 @@ export type infoReward = {
 
 type props = {
   reward: infoReward;
-  addBacker: () => void;
-  increaseAmount: (_amount: number) => boolean;
-  // pledges: infoReward[];
+  addPledge: (_id: number, _amount: number) => void;
+  pledges: infoReward[];
 };
 
-const Reward: FC<props> = ({ reward, addBacker, increaseAmount }) => {
+const Reward: FC<props> = ({ reward, addPledge, pledges }) => {
   const { title, pledge, desc, amount } = reward;
   const [showModal, toggleModal] = useState<boolean>(false);
-  const [stock, setStock] = useState<number>(amount);
 
-  const updateStock = () => {
-    setStock(stock - 1);
-  };
-
-  const addPledge = (amount: number) => {
-    if (increaseAmount(amount)) {
-      addBacker();
-      updateStock();
-    }
+  const handleModal = () => {
+    toggleModal(!showModal);
   };
 
   return (
     <div
       className={
         "relative shadow rounded-lg border-2 p-7 flex flex-col gap-7 " +
-        (stock ? "" : "grayscale")
+        (amount ? "" : "grayscale")
       }
     >
       <header>
@@ -49,15 +40,15 @@ const Reward: FC<props> = ({ reward, addBacker, increaseAmount }) => {
       </header>
       <p className="text-neutral-dark-gray text-lg font-normal">{desc}</p>
       <p className="text-neutral-dark-gray flex items-center gap-2 text-xl">
-        <span className="text-neutral-black text-4xl font-bold">{stock}</span>{" "}
+        <span className="text-neutral-black text-4xl font-bold">{amount}</span>
         left
       </p>
       <button
         className="px-6 py-3 w-2/3 bg-primary-moderate-cyan rounded-3xl text-slate-50 text-lg font-bold"
-        onClick={stock ? () => toggleModal(true) : () => null}
-        onKeyPress={stock ? () => toggleModal(true) : () => null}
+        onClick={amount ? () => handleModal() : () => null}
+        onKeyPress={amount ? () => handleModal() : () => null}
       >
-        {stock ? "Select Reward" : "Out of Stock"}
+        {amount ? "Select Reward" : "Out of Stock"}
       </button>
 
       {showModal ? (
@@ -71,30 +62,38 @@ const Reward: FC<props> = ({ reward, addBacker, increaseAmount }) => {
               </p>
               <button
                 className="absolute top-8 right-8"
-                onClick={() => toggleModal(false)}
-                onKeyPress={() => toggleModal(false)}
+                onClick={() => handleModal()}
+                onKeyPress={() => handleModal()}
               >
                 <img alt="" src="images/icon-close-modal.svg" />
               </button>
               <div className="flex flex-col gap-8">
                 <RewardSelect
                   addPledge={addPledge}
+                  amount={-1}
                   desc={
                     "Choose to support us without a reward if you simply believe in our project. As a backer, you will be signed up to receive product updates via email."
                   }
+                  id={0}
                   reward={false}
                   selected={false}
                   title={"Piedge with no reward"}
+                  toggleModal={handleModal}
                 />
-                <RewardSelect
-                  addPledge={addPledge}
-                  desc={
-                    "Choose to support us without a reward if you simply believe in our project. As a backer, you will be signed up to receive product updates via email."
-                  }
-                  reward={false}
-                  selected={false}
-                  title={"Piedge with no reward"}
-                />
+                {pledges.map((pledge) => (
+                  <RewardSelect
+                    key={pledge.id}
+                    addPledge={addPledge}
+                    amount={pledge.amount}
+                    desc={pledge.desc}
+                    id={pledge.id}
+                    pledge={pledge.pledge}
+                    reward={true}
+                    selected={false}
+                    title={pledge.title}
+                    toggleModal={handleModal}
+                  />
+                ))}
               </div>
             </article>
           </div>
