@@ -21,7 +21,6 @@ export const RewardSelect: FC<props> = ({
   title,
   pledge,
   desc,
-  left,
   selected,
   id,
 }) => {
@@ -45,20 +44,25 @@ export const RewardSelect: FC<props> = ({
     <div
       className={
         "flex flex-col gap-3 z-10 relative border-2 p-6 shadow rounded-md " +
-        (isSelected && amount ? "border-primary-moderate-cyan" : "")
+        (isSelected && amount
+          ? "border-primary-moderate-cyan"
+          : !amount
+          ? "grayscale"
+          : "")
       }
     >
-      <header className="flex gap-2 mb-4">
-        <div className="flex flex-col gap-2 order-2">
+      <header className="flex gap-4 mb-4">
+        <div className="flex flex-col gap-1 order-2">
           <h2 className="text-neutral-black font-bold text-lg">{title}</h2>
           {reward ? (
-            <p className="text-primary-moderate-cyan">
+            <p className="text-primary-dark-cyan text-md">
               Pledge ${pledge} or more
             </p>
           ) : null}
         </div>
         <input
           className="order-1 pointer-events-auto"
+          disabled={!amount}
           type="checkbox"
           onClick={() => (handleSelect(), console.log(id))}
         />
@@ -66,33 +70,44 @@ export const RewardSelect: FC<props> = ({
 
       <p className="text-neutral-dark-gray text-lg">{desc}</p>
 
-      {left && left > 0 ? (
-        <p>
-          <span>{left}</span> left
+      {amount >= 0 ? (
+        <p className="flex gap-2 items-center text-neutral-dark-gray my-3">
+          <span className="text-2xl font-bold text-neutral-black">
+            {amount}
+          </span>{" "}
+          left
         </p>
       ) : null}
       {isSelected && amount ? (
         <footer className="flex flex-col items-center">
-          <hr className="border-1 my-6 border-neutral-dark-gray" />
-          <h3 className="text-neutral-dark-gray text-lg">Enter your pledge</h3>
+          <hr className="border-1 w-full mt-4 border-gray-300" />
+          <h3 className="text-neutral-dark-gray text-lg my-6">
+            Enter your pledge
+          </h3>
           <form
             action="/
             "
-            className="flex gap-5"
+            className="flex gap-3 justify-center"
           >
+            <label
+              className="text-center w-5/12 outline-primary-moderate-cyan py-4 px-6 border-2 rounded-3xl flex gap-2 hover:border-primary-moderate-cyan"
+              htmlFor="pledge"
+            >
+              $
+              <input
+                className="w-full outline-none"
+                defaultValue={pledge}
+                max={5000}
+                min={pledge}
+                type={"number"}
+                onChange={(e) => setValue(parseInt(e.target.value))}
+              />
+            </label>
+
             <input
-              className="w-24 text-center outline-primary-moderate-cyan"
-              defaultValue={pledge}
-              max={5000}
-              min={pledge}
-              type={"number"}
-              onChange={(e) => setValue(parseInt(e.target.value))}
-            />
-            <input
-              className="border-2 bg-primary-moderate-cyan"
-              id="continue"
+              className="border-2 w-6/12 bg-primary-moderate-cyan text-slate-50 font-bold text-md py-4 px-6 rounded-3xl"
               type="submit"
-              value="CONTINUE"
+              value="Continue"
               onClick={(e) => handleSubmit(e)}
             />
           </form>
