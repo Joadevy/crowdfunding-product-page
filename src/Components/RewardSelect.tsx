@@ -1,21 +1,23 @@
-import React, { FC, MouseEvent, useState } from "react";
+import React, { FC, MouseEvent, useEffect, useState } from "react";
 
 type props = {
   title: string;
   reward: boolean;
   amount: number;
-  selected: boolean;
+  selected: number;
   id: number;
   pledge?: number;
   desc: string;
   left?: number;
   addPledge: (_id: number, _amount: number) => void;
   toggleModal: () => void;
+  handleSelected: (_id: number) => void;
 };
 
 export const RewardSelect: FC<props> = ({
   addPledge,
   toggleModal,
+  handleSelected,
   amount,
   reward,
   title,
@@ -27,14 +29,22 @@ export const RewardSelect: FC<props> = ({
   const [isSelected, toggleSelected] = useState<boolean>(false);
   const [value, setValue] = useState<number>(pledge!);
 
-  const handleSelect = () => {
+  const handleSelect = (id: number) => {
+    handleSelected(id); // Setea el state del Reward Modal
     toggleSelected(!isSelected);
   };
+
+  useEffect(() => {
+    console.log("Selected changed");
+    console.log(id, selected);
+    if (selected === id) {
+      toggleSelected(!isSelected); // Se esta ejecutando exactamente la revez
+    }
+  }, [selected]);
 
   const handleSubmit = (e: MouseEvent) => {
     if (value >= pledge! || !pledge) {
       e.preventDefault();
-      console.log(value);
       addPledge(id, value);
       toggleModal();
     }
@@ -64,7 +74,7 @@ export const RewardSelect: FC<props> = ({
           className="order-1 pointer-events-auto"
           disabled={!amount}
           type="checkbox"
-          onClick={() => (handleSelect(), console.log(id))}
+          onClick={() => (handleSelect(id), console.log(id))}
         />
       </header>
 
