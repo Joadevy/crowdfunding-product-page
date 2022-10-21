@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import Header from "./Components/Header";
 import StatCard from "./Components/StatCard";
 import Reward from "./Components/Reward";
+import { Thanks } from "./Components/Thanks";
 
 function App() {
   const [bookmarked, setBookmarked] = useState<boolean>(false);
@@ -18,6 +19,7 @@ function App() {
   const [status, setStatus] = useState<"loading" | "success">("loading");
   const [amountBacked, setAmountBacked] = useState<number>(0);
   const [totalBackers, setTotalBackers] = useState<number>(0);
+  const [thanksModal, toggleThanksModal] = useState<boolean>(false);
 
   useEffect(() => {
     const bookmarked = JSON.parse(localStorage.getItem("bookmarked") || "[]");
@@ -98,7 +100,11 @@ function App() {
     }
   };
 
-  if (status === "loading") return <h2>Loading...</h2>;
+  const handleThanksModal = () => {
+    toggleThanksModal(!thanksModal);
+  };
+
+  if (status === "loading") return <h2 className="text-center"> Loading...</h2>;
 
   return (
     <div>
@@ -173,10 +179,13 @@ function App() {
                 addPledge={addPledge}
                 pledges={pledges}
                 reward={pledge}
+                toggleThanksModal={handleThanksModal}
               />
             ))}
           </div>
         </article>
+
+        {thanksModal ? <Thanks toggleModal={handleThanksModal} /> : null}
       </main>
     </div>
   );

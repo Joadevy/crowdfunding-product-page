@@ -13,10 +13,16 @@ export type infoReward = {
 type props = {
   reward: infoReward;
   addPledge: (_id: number, _amount: number) => void;
+  toggleThanksModal: () => void;
   pledges: infoReward[];
 };
 
-const Reward: FC<props> = ({ reward, addPledge, pledges }) => {
+const Reward: FC<props> = ({
+  reward,
+  addPledge,
+  pledges,
+  toggleThanksModal,
+}) => {
   const { title, pledge, desc, amount } = reward;
   const [showModal, toggleModal] = useState<boolean>(false);
 
@@ -55,6 +61,7 @@ const Reward: FC<props> = ({ reward, addPledge, pledges }) => {
           addPledge={addPledge}
           handleModal={handleModal}
           pledges={pledges}
+          toggleThanksModal={toggleThanksModal}
         />
       ) : null}
     </div>

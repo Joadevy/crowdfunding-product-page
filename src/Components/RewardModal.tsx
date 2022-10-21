@@ -8,9 +8,15 @@ type props = {
   addPledge: (_id: number, _amount: number) => void;
   pledges: infoReward[];
   handleModal: () => void;
+  toggleThanksModal: () => void;
 };
 
-export const RewardModal: FC<props> = ({ addPledge, pledges, handleModal }) => {
+export const RewardModal: FC<props> = ({
+  addPledge,
+  pledges,
+  handleModal,
+  toggleThanksModal,
+}) => {
   const [selected, setSelected] = useState<number>();
 
   const handleSelected = (id: number) => {
@@ -46,6 +52,7 @@ export const RewardModal: FC<props> = ({ addPledge, pledges, handleModal }) => {
               selected={selected!}
               title={"Piedge with no reward"}
               toggleModal={handleModal}
+              toggleThanksModal={toggleThanksModal}
             />
             {pledges.map((pledge) => (
               <RewardSelect
@@ -60,6 +67,7 @@ export const RewardModal: FC<props> = ({ addPledge, pledges, handleModal }) => {
                 selected={selected!}
                 title={pledge.title}
                 toggleModal={handleModal}
+                toggleThanksModal={toggleThanksModal}
               />
             ))}
           </div>

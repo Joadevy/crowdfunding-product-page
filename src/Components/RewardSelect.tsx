@@ -1,4 +1,6 @@
-import React, { FC, MouseEvent, useEffect, useState } from "react";
+import { FC, MouseEvent, useEffect, useState } from "react";
+
+import { Thanks } from "./Thanks";
 
 type props = {
   title: string;
@@ -12,11 +14,13 @@ type props = {
   addPledge: (_id: number, _amount: number) => void;
   toggleModal: () => void;
   handleSelected: (_id: number) => void;
+  toggleThanksModal: () => void;
 };
 
 export const RewardSelect: FC<props> = ({
   addPledge,
   toggleModal,
+  toggleThanksModal,
   handleSelected,
   amount,
   reward,
@@ -26,27 +30,29 @@ export const RewardSelect: FC<props> = ({
   selected,
   id,
 }) => {
-  const [isSelected, toggleSelected] = useState<boolean>(false);
+  const [isSelected, toggleSelected] = useState<boolean>(selected === id);
   const [value, setValue] = useState<number>(pledge!);
 
   const handleSelect = (id: number) => {
-    handleSelected(id); // Setea el state del Reward Modal
-    toggleSelected(!isSelected);
+    handleSelected(id);
   };
 
   useEffect(() => {
-    console.log("Selected changed");
-    console.log(id, selected);
     if (selected === id) {
-      toggleSelected(!isSelected); // Se esta ejecutando exactamente la revez
+      toggleSelected(true);
+    } else {
+      toggleSelected(false);
     }
-  }, [selected]);
+  }, [selected]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleSubmit = (e: MouseEvent) => {
-    if (value >= pledge! || !pledge) {
+    if (value >= pledge! || (!pledge && value > 0)) {
       e.preventDefault();
       addPledge(id, value);
       toggleModal();
+      toggleThanksModal();
+    } else {
+      e.preventDefault();
     }
   };
 
@@ -71,10 +77,11 @@ export const RewardSelect: FC<props> = ({
           ) : null}
         </div>
         <input
+          checked={isSelected}
           className="order-1 pointer-events-auto"
           disabled={!amount}
           type="checkbox"
-          onClick={() => (handleSelect(id), console.log(id))}
+          onChange={() => handleSelect(id)}
         />
       </header>
 
@@ -108,7 +115,7 @@ export const RewardSelect: FC<props> = ({
                 className="w-full outline-none"
                 defaultValue={pledge}
                 max={5000}
-                min={pledge}
+                min={pledge || 1}
                 type={"number"}
                 onChange={(e) => setValue(parseInt(e.target.value))}
               />
