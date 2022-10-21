@@ -1,7 +1,5 @@
 import { FC, MouseEvent, useEffect, useState } from "react";
 
-import { Thanks } from "./Thanks";
-
 type props = {
   title: string;
   reward: boolean;
@@ -67,7 +65,7 @@ export const RewardSelect: FC<props> = ({
           : "")
       }
     >
-      <header className="flex gap-4 mb-4">
+      <header className="flex gap-4 items-center mb-4">
         <div className="flex flex-col gap-1 order-2">
           <h2 className="text-neutral-black font-bold text-lg">{title}</h2>
           {reward ? (
@@ -76,13 +74,30 @@ export const RewardSelect: FC<props> = ({
             </p>
           ) : null}
         </div>
-        <input
-          checked={isSelected}
-          className="order-1 pointer-events-auto"
-          disabled={!amount}
-          type="checkbox"
-          onChange={() => handleSelect(id)}
-        />
+        <label
+          className={
+            "block relative cursor-pointer pl-2 text-xl select-none border-2 rounded-full " +
+            (!amount ? "cursor-not-allowed" : "cursor-pointer")
+          }
+        >
+          <input
+            checked={isSelected}
+            className={
+              "opacity-0 h-2 w-2" +
+              (!amount ? "cursor-not-allowed" : "cursor-pointer")
+            }
+            disabled={!amount}
+            type="radio"
+            onChange={() => handleSelect(id)}
+          />
+          <span
+            className={
+              isSelected
+                ? "absolute top-0 right-0 left-0 m-auto bottom-0 h-4 w-4 bg-primary-moderate-cyan rounded-full after:hidden after:absolute content-none"
+                : ""
+            }
+          />
+        </label>
       </header>
 
       <p className="text-neutral-dark-gray text-lg">{desc}</p>
