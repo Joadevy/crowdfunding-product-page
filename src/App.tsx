@@ -1,36 +1,19 @@
 import type { infoReward } from "./Components/Pledge/Reward";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import Header from "./Components/Header";
 import StatCard from "./Components/StatCard";
 import Reward from "./Components/Pledge/Reward";
 import { Thanks } from "./Components/Thanks";
-import { usePledge } from "./Components/Hooks/usePledge";
+import { usePledge } from "./Hooks/usePledge";
+import useBookmark from "./Hooks/useBookmark";
 
 function App() {
-  const [bookmarked, setBookmarked] = useState<boolean>(false);
+  const { bookmarked, handleBookmark } = useBookmark();
   const { addPledge, pledges, status, data } = usePledge();
   const { daysLeft, totalBackers, amountBacked } = data;
   const [thanksModal, toggleThanksModal] = useState<boolean>(false);
-
-  useEffect(() => {
-    const bookmarked = JSON.parse(localStorage.getItem("bookmarked") || "[]");
-
-    if (bookmarked === true) setBookmarked(true);
-  }, []);
-
-  const bookmarkToLocalStorage = () => {
-    const bookmarked = JSON.parse(localStorage.getItem("bookmarked") || "[]");
-
-    if (bookmarked === true) {
-      localStorage.removeItem("bookmarked");
-      setBookmarked(false);
-    } else {
-      localStorage.setItem("bookmarked", "true");
-      setBookmarked(true);
-    }
-  };
 
   const handleThanksModal = () => {
     toggleThanksModal(!thanksModal);
@@ -61,7 +44,7 @@ function App() {
             >
               <p>Back this project</p>
             </a>
-            <button onClick={() => bookmarkToLocalStorage()}>
+            <button onClick={() => handleBookmark()}>
               <svg height="56" width="56" xmlns="http://www.w3.org/2000/svg">
                 <g className="hover:grayscale" fill="none" fillRule="evenodd">
                   <circle
@@ -130,7 +113,7 @@ function App() {
           </div>
         </article>
 
-        {thanksModal ? <Thanks toggleModal={handleThanksModal} /> : null}
+        {thanksModal && <Thanks toggleModal={handleThanksModal} />}
       </main>
     </div>
   );

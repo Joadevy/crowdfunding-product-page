@@ -24,7 +24,7 @@ const Header: FC = () => {
           </button>
         </nav>
       </div>
-      {showModal ? (
+      {showModal && (
         <Modal>
           <ol className="z-10 absolute w-5/6 top-24 right-0 left-0 m-auto bg-slate-50 p-6 rounded-xl shadow-modal font-semibold text-lg flex flex-col gap-10">
             <li>
@@ -38,7 +38,7 @@ const Header: FC = () => {
             </li>
           </ol>
         </Modal>
-      ) : null}
+      )}
     </header>
   );
 };

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
-import { infoBackers } from "../../types";
-import { infoReward } from "../Pledge/Reward";
+import { infoBackers } from "../types";
+import { infoReward } from "../Components/Pledge/Reward";
 
 type data = {
   amountBacked: number;

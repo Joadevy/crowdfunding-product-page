@@ -53,11 +53,11 @@ export const RewardModal: FC<props> = ({
               id={0}
               reward={false}
               selected={selected!}
-              title={"Piedge with no reward"}
+              title={"Pledge with no reward"}
               toggleModal={handleModal}
               toggleThanksModal={toggleThanksModal}
             />
-            {pledges.map((pledge) => (
+            {pledges.map((pledge: infoReward) => (
               <RewardSelect
                 key={pledge.id}
                 addPledge={addPledge}

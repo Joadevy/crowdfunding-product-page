@@ -68,11 +68,11 @@ export const RewardSelect: FC<props> = ({
       <header className="flex gap-4 items-center mb-4">
         <div className="flex flex-col gap-1 order-2">
           <h2 className="text-neutral-black font-bold text-lg">{title}</h2>
-          {reward ? (
+          {reward && (
             <p className="text-primary-dark-cyan text-md">
               Pledge ${pledge} or more
             </p>
-          ) : null}
+          )}
         </div>
         <label
           className={
@@ -102,15 +102,15 @@ export const RewardSelect: FC<props> = ({
 
       <p className="text-neutral-dark-gray text-lg">{desc}</p>
 
-      {amount >= 0 ? (
+      {amount >= 0 && (
         <p className="flex gap-2 items-center text-neutral-dark-gray my-3">
           <span className="text-2xl font-bold text-neutral-black">
             {amount}
           </span>{" "}
           left
         </p>
-      ) : null}
-      {isSelected && amount ? (
+      )}
+      {isSelected && amount && (
         <footer className="flex flex-col items-center">
           <hr className="border-1 w-full mt-4 border-gray-300" />
           <h3 className="text-neutral-dark-gray text-lg my-6">
@@ -144,7 +144,7 @@ export const RewardSelect: FC<props> = ({
             />
           </form>
         </footer>
-      ) : null}
+      )}
     </div>
   );
 };
