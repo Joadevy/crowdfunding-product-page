@@ -23,7 +23,7 @@ const Reward: FC<props> = ({
   pledges,
   toggleThanksModal,
 }) => {
-  const { title, pledge, desc, amount } = reward;
+  const { title, pledge, desc, amount, id } = reward;
   const [showModal, toggleModal] = useState<boolean>(false);
 
   const handleModal = () => {
@@ -49,7 +49,10 @@ const Reward: FC<props> = ({
         left
       </p>
       <button
-        className="px-6 py-3 w-2/3 bg-primary-moderate-cyan rounded-3xl text-slate-50 text-lg font-bold"
+        className={
+          "px-6 py-3 w-2/3 bg-primary-moderate-cyan rounded-3xl text-slate-50 text-lg font-bold transition-colors " +
+          (amount ? "hover:bg-primary-dark-cyan" : "cursor-not-allowed")
+        }
         onClick={amount ? () => handleModal() : () => null}
         onKeyPress={amount ? () => handleModal() : () => null}
       >
@@ -60,6 +63,7 @@ const Reward: FC<props> = ({
         <RewardModal
           addPledge={addPledge}
           handleModal={handleModal}
+          idSelected={id}
           pledges={pledges}
           toggleThanksModal={toggleThanksModal}
         />

@@ -122,15 +122,17 @@ function App() {
             strain.
           </p>
 
-          <div className="flex gap-2">
-            <button className="px-9 bg-primary-moderate-cyan rounded-3xl text-slate-50 text-lg font-bold">
-              Back this project
-            </button>
+          <div className="flex gap-2 items-center">
+            <a
+              className="px-9 py-4 bg-primary-moderate-cyan rounded-3xl text-slate-50 text-lg font-bold hover:bg-primary-dark-cyan transition-colors  "
+              href="#selection"
+            >
+              <p>Back this project</p>
+            </a>
             <button onClick={() => bookmarkToLocalStorage()}>
               <svg height="56" width="56" xmlns="http://www.w3.org/2000/svg">
-                <g fill="none" fillRule="evenodd">
+                <g className="hover:grayscale" fill="none" fillRule="evenodd">
                   <circle
-                    className="text-lg transition-colors"
                     cx="28"
                     cy="28"
                     fill={bookmarked ? "hsl(176, 72%, 28%)" : "#2F2F2F"}
@@ -147,8 +149,19 @@ function App() {
         </header>
 
         <article className="bg-slate-100 shadow-md py-5 flex flex-col gap-8 items-center justify-center">
-          <StatCard data={amountBacked} desc="of $100,000 backed" />
-          <StatCard data={totalBackers} desc="total backers" />
+          <StatCard
+            data={amountBacked.toLocaleString("en-US", {
+              style: "currency",
+              currency: "USD",
+              minimumFractionDigits: 0,
+              maximumFractionDigits: 0,
+            })}
+            desc="of $100,000 backed"
+          />
+          <StatCard
+            data={totalBackers.toLocaleString("en-US")}
+            desc="total backers"
+          />
           <StatCard data={data.daysLeft} desc="days left" />
           <div className="rounded-xl bg-slate-200 w-full h-4">
             <div
@@ -172,7 +185,7 @@ function App() {
             extra desk space below your computer to allow notepads, pens, and
             USB sticks to be stored under the stand.
           </p>
-          <div className="mt-10 flex flex-col gap-5">
+          <div className="mt-10 flex flex-col gap-5" id="selection">
             {pledges.map((pledge: infoReward) => (
               <Reward
                 key={pledge.id}
