@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import Modal from "./Moda";
+import Modal from "./Modal";
 
 type props = {
   toggleModal: () => void;

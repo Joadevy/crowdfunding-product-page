@@ -1,8 +1,9 @@
-import React, { useState, type FC } from "react";
+import { useState, type FC } from "react";
 
-import Modal from "./Moda";
-import { infoReward } from "./Reward";
+import Modal from "../Modal";
+
 import { RewardSelect } from "./RewardSelect";
+import { infoReward } from "./Reward";
 
 type props = {
   addPledge: (_id: number, _amount: number) => void;

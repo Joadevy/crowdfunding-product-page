@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
 
-import Modal from "./Moda";
+import Modal from "./Modal";
 
 const Header: FC = () => {
   const [showModal, toggleModal] = useState<boolean>(false);

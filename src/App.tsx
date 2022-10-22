@@ -1,48 +1,25 @@
 import type { infoBackers } from "./types";
-import type { infoReward } from "./Components/Reward";
+import type { infoReward } from "./Components/Pledge/Reward";
 
 import { useEffect, useState } from "react";
 
 import Header from "./Components/Header";
 import StatCard from "./Components/StatCard";
-import Reward from "./Components/Reward";
+import Reward from "./Components/Pledge/Reward";
 import { Thanks } from "./Components/Thanks";
+import { usePledge } from "./Components/Hooks/usePledge";
 
 function App() {
   const [bookmarked, setBookmarked] = useState<boolean>(false);
-  const [data, setData] = useState<infoBackers>({
-    amountBacked: 0,
-    totalBackers: 0,
-    daysLeft: 0,
-  });
-  const [pledges, setPledges] = useState<infoReward[]>([]);
-  const [status, setStatus] = useState<"loading" | "success">("loading");
-  const [amountBacked, setAmountBacked] = useState<number>(0);
-  const [totalBackers, setTotalBackers] = useState<number>(0);
+  const { addPledge, pledges, amountBacked, totalBackers, daysLeft, status } =
+    usePledge();
   const [thanksModal, toggleThanksModal] = useState<boolean>(false);
 
   useEffect(() => {
     const bookmarked = JSON.parse(localStorage.getItem("bookmarked") || "[]");
 
     if (bookmarked === true) setBookmarked(true);
-
-    requestData();
   }, []);
-
-  const requestData = async () => {
-    const data = await fetch("data.json");
-    const dataRes = await data.json();
-    const pledges = await fetch("pledges.json");
-    const dataPledges = await pledges.json();
-
-    if (dataRes && dataPledges) {
-      setPledges(dataPledges);
-      setData(dataRes);
-      setAmountBacked(dataRes.amountBacked);
-      setTotalBackers(dataRes.totalBackers);
-      setStatus("success");
-    }
-  };
 
   const bookmarkToLocalStorage = () => {
     const bookmarked = JSON.parse(localStorage.getItem("bookmarked") || "[]");
@@ -53,50 +30,6 @@ function App() {
     } else {
       localStorage.setItem("bookmarked", "true");
       setBookmarked(true);
-    }
-  };
-
-  const addBacker = () => {
-    if (amountBacked !== 100000) setTotalBackers(totalBackers + 1);
-  };
-
-  const addAmountBacked = (amount: number) => {
-    if (amountBacked + amount <= 100000) {
-      setAmountBacked(amountBacked + amount);
-
-      return true;
-    } else if (amountBacked !== 100000) {
-      setAmountBacked(100000);
-
-      return true;
-    }
-
-    return false;
-  };
-
-  const updateStock = (id: number) => {
-    let pledgesUpdated = pledges.map((pledge) => {
-      if (pledge.id === id && pledge.amount) {
-        pledge.amount--;
-      }
-
-      return pledge;
-    });
-
-    setPledges(pledgesUpdated);
-  };
-
-  const addPledge = (idPledge: number, amount: number) => {
-    // Pledge with id = 0 doesn't have reward so doesn't need to update stock
-    if (idPledge === 0 && addAmountBacked(amount)) {
-      addBacker();
-    } else {
-      for (let pledge of pledges) {
-        if (pledge.id === idPledge && addAmountBacked(amount)) {
-          addBacker();
-          updateStock(idPledge);
-        }
-      }
     }
   };
 
@@ -162,7 +95,7 @@ function App() {
             data={totalBackers.toLocaleString("en-US")}
             desc="total backers"
           />
-          <StatCard data={data.daysLeft} desc="days left" />
+          <StatCard data={daysLeft} desc="days left" />
           <div className="rounded-xl bg-slate-200 w-full h-4">
             <div
               className="bg-primary-moderate-cyan h-4 rounded-xl"
