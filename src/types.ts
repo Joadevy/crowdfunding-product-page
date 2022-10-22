@@ -5,6 +5,6 @@ export type infoBackers = {
 };
 
 export type Stat = {
-  data: number;
+  data: string | number;
   desc: string;
 };
