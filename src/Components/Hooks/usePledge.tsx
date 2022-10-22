@@ -16,9 +16,6 @@ export const usePledge = () => {
     totalBackers: 0,
     daysLeft: 0,
   });
-  const [amountBacked, setAmountBacked] = useState<number>(0);
-  const [totalBackers, setTotalBackers] = useState<number>(0);
-  const [daysLeft, setDaysLeft] = useState<number>(0);
   const [status, setStatus] = useState<"loading" | "success">("loading");
   const [pledges, setPledges] = useState<infoReward[]>([]);
 
@@ -31,27 +28,27 @@ export const usePledge = () => {
     const dataRes: data = await data.json();
 
     if (dataRes) {
-      // Seria mejor almacenar todo en el useState de data para tener menos estados.
       setPledges(dataRes.pledges);
-      setAmountBacked(dataRes.amountBacked);
-      // setData({...,dataRes.amountBacked,...});
-      setTotalBackers(dataRes.totalBackers);
-      setDaysLeft(dataRes.daysLeft);
+      setData({
+        amountBacked: dataRes.amountBacked,
+        totalBackers: dataRes.totalBackers,
+        daysLeft: dataRes.daysLeft,
+      });
       setStatus("success");
     }
   };
 
-  const addBacker = () => {
-    if (amountBacked !== 100000) setTotalBackers(totalBackers + 1);
-  };
-
-  const addAmountBacked = (amount: number) => {
-    if (amountBacked + amount <= 100000) {
-      setAmountBacked(amountBacked + amount);
+  const addBack = (amount: number) => {
+    if (data.amountBacked + amount <= 100000) {
+      setData({
+        amountBacked: data.amountBacked + amount,
+        totalBackers: data.totalBackers + 1,
+        daysLeft: data.daysLeft,
+      });
 
       return true;
-    } else if (amountBacked !== 100000) {
-      setAmountBacked(100000);
+    } else if (data.amountBacked !== 100000) {
+      setData({ ...data, amountBacked: 100000 });
 
       return true;
     }
@@ -73,17 +70,21 @@ export const usePledge = () => {
 
   const addPledge = (idPledge: number, amount: number) => {
     // Pledge with id = 0 doesn't have reward so doesn't need to update stock
-    if (idPledge === 0 && addAmountBacked(amount)) {
-      addBacker();
+    if (idPledge === 0) {
+      addBack(amount);
     } else {
-      for (let pledge of pledges!) {
-        if (pledge.id === idPledge && addAmountBacked(amount)) {
-          addBacker();
+      for (let pledge of pledges) {
+        if (pledge.id === idPledge && addBack(amount)) {
           updateStock(idPledge);
         }
       }
     }
   };
 
-  return { addPledge, pledges, amountBacked, totalBackers, daysLeft, status };
+  return {
+    addPledge,
+    pledges,
+    status,
+    data,
+  };
 };

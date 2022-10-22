@@ -1,4 +1,3 @@
-import type { infoBackers } from "./types";
 import type { infoReward } from "./Components/Pledge/Reward";
 
 import { useEffect, useState } from "react";
@@ -11,8 +10,8 @@ import { usePledge } from "./Components/Hooks/usePledge";
 
 function App() {
   const [bookmarked, setBookmarked] = useState<boolean>(false);
-  const { addPledge, pledges, amountBacked, totalBackers, daysLeft, status } =
-    usePledge();
+  const { addPledge, pledges, status, data } = usePledge();
+  const { daysLeft, totalBackers, amountBacked } = data;
   const [thanksModal, toggleThanksModal] = useState<boolean>(false);
 
   useEffect(() => {
