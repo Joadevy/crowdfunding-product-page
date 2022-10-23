@@ -16,8 +16,8 @@ module.exports = {
         commissioner: ["Commissioner", "sans-serif", "monospace"],
       },
       backgroundImage: {
-        "mobile-hero": "url('images/image-hero-mobile.jpg')",
-        "desktop-hero": "url('images/image-hero-desktop.jpg')",
+        "mobile-hero": "url('./images/image-hero-mobile.jpg')",
+        "desktop-hero": "url('./images/image-hero-desktop.jpg')",
       },
       boxShadow: {
         modal: "0 0 150px 150px rgba(0, 0, 0, 0.4)",
