@@ -27,7 +27,7 @@ function App() {
       <main className="mx-7 relative flex flex-col gap-10 mb-28 lg:w-[55%] lg:m-auto">
         <header className="shadow-md -mt-9 flex flex-col px-5 pb-7 gap-5 items-center rounded-lg bg-slate-100 lg:bg-slate-50 lg:-mt-28 lg:rounded-xl lg:shadow-none lg:mb-10">
           <div className="mt-[-30px] max-w-max">
-            <img alt="" src="images/logo-mastercraft.svg" srcSet="" />
+            <img alt="" src="images/logo-mastercraft.svg" />
           </div>
           <h1 className="text-center font-bold text-2xl lg:text-3xl lg:mt-6">
             Mastercraft Bamboo Monitor Riser
