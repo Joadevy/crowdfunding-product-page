@@ -55,7 +55,7 @@ const Reward: FC<props> = ({
         </p>
         <button
           className={
-            "px-6 py-3 w-2/3 bg-primary-moderate-cyan rounded-3xl text-slate-50 text-lg font-bold transition-colors lg:w-3/12 " +
+            "px-6 py-3 max-w-[66%] bg-primary-moderate-cyan rounded-3xl text-slate-50 text-base lg:text-lg font-bold transition-colors lg:w-3/12 " +
             (amount ? "hover:bg-primary-dark-cyan" : "cursor-not-allowed")
           }
           onClick={amount ? () => handleModal() : () => null}

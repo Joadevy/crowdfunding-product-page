@@ -24,7 +24,7 @@ function App() {
   return (
     <div>
       <Header />
-      <main className="mx-10 relative flex flex-col gap-10 mb-28 lg:w-[55%] lg:m-auto">
+      <main className="mx-7 relative flex flex-col gap-10 mb-28 lg:w-[55%] lg:m-auto">
         <header className="shadow-md -mt-9 flex flex-col px-5 pb-7 gap-5 items-center rounded-lg bg-slate-100 lg:bg-slate-50 lg:-mt-28 lg:rounded-xl lg:shadow-none lg:mb-10">
           <div className="mt-[-30px] max-w-max">
             <img alt="" src="images/logo-mastercraft.svg" srcSet="" />
@@ -37,12 +37,14 @@ function App() {
             strain.
           </p>
 
-          <div className="flex gap-2 items-center lg:w-11/12 lg:justify-between lg:mt-4">
+          <div className="flex gap-2 w-full justify-between items-center lg:w-11/12 lg:justify-between lg:mt-4">
             <a
-              className="px-9 py-4 bg-primary-moderate-cyan rounded-3xl text-slate-50 text-lg font-bold hover:bg-primary-dark-cyan transition-colors  "
+              className="px-7 lg:px-9 py-4 bg-primary-moderate-cyan rounded-3xl text-slate-50 text-lg font-bold hover:bg-primary-dark-cyan transition-colors  "
               href="#selection"
             >
-              <p>Back this project</p>
+              <p className="text-center text-base lg:text-lg">
+                Back this project
+              </p>
             </a>
             <button
               className={
