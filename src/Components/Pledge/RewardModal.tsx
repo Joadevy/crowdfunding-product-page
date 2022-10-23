@@ -28,7 +28,7 @@ export const RewardModal: FC<props> = ({
 
   return (
     <Modal>
-      <div className="fixed top-0 w-full h-full bg-[rgba(0,0,0,0.5)] overflow-y-auto">
+      <div className="fixed top-0 w-full h-full bg-[rgba(0,0,0,0.5)] overflow-y-auto z-20">
         <article className="bg-slate-50 p-7 m-4 absolute top-32 bottom-4 rounded-lg overflow-y-scroll">
           <h2 className="font-bold text-2xl mb-4">Back this project</h2>
           <p className="text-neutral-dark-gray text-md mb-8">

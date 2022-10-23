@@ -22,6 +22,7 @@ module.exports = {
       boxShadow: {
         modal: "0 0 150px 150px rgba(0, 0, 0, 0.4)",
         hero: "7px -22px 35px 42px rgba(0,0,0,0.76)",
+        heroDesktop: "7px -10px 65px 42px rgba(0,0,0,0.5)",
       },
     },
   },

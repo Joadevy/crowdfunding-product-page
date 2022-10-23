@@ -24,61 +24,74 @@ function App() {
   return (
     <div>
       <Header />
-      <main className="mx-10 relative flex flex-col gap-10 mb-28">
-        <header className="shadow-md mt-[-35px] flex flex-col px-5 pb-7 gap-5 items-center rounded-lg bg-slate-100">
+      <main className="mx-10 relative flex flex-col gap-10 mb-28 lg:w-[55%] lg:m-auto">
+        <header className="shadow-md -mt-9 flex flex-col px-5 pb-7 gap-5 items-center rounded-lg bg-slate-100 lg:bg-slate-50 lg:-mt-32 lg:rounded-xl lg:shadow-none lg:mb-10">
           <div className="mt-[-30px] max-w-max">
             <img alt="" src="images/logo-mastercraft.svg" srcSet="" />
           </div>
-          <h1 className="text-center font-bold text-2xl">
+          <h1 className="text-center font-bold text-2xl lg:text-3xl lg:mt-6">
             Mastercraft Bamboo Monitor Riser
           </h1>
-          <p className="text-neutral-dark-gray text-center">
+          <p className="text-neutral-dark-gray text-center lg:text-lg">
             A beautiful & handcrafted monitor stand to reduce neck and eye
             strain.
           </p>
 
-          <div className="flex gap-2 items-center">
+          <div className="flex gap-2 items-center lg:w-11/12 lg:justify-between lg:mt-4">
             <a
               className="px-9 py-4 bg-primary-moderate-cyan rounded-3xl text-slate-50 text-lg font-bold hover:bg-primary-dark-cyan transition-colors  "
               href="#selection"
             >
               <p>Back this project</p>
             </a>
-            <button onClick={() => handleBookmark()}>
-              <svg height="56" width="56" xmlns="http://www.w3.org/2000/svg">
-                <g className="hover:grayscale" fill="none" fillRule="evenodd">
-                  <circle
-                    cx="28"
-                    cy="28"
-                    fill={bookmarked ? "hsl(176, 72%, 28%)" : "#2F2F2F"}
-                    r="28"
-                  />
-                  <path
-                    d="M23 19v18l5-5.058L33 37V19z"
-                    fill={bookmarked ? "hsl(176, 50%, 47%)" : "#B1B1B1"}
-                  />
-                </g>
-              </svg>
-            </button>
+            <div className="flex items-center gap-3">
+              <button onClick={() => handleBookmark()}>
+                <svg height="56" width="56" xmlns="http://www.w3.org/2000/svg">
+                  <g className="hover:grayscale" fill="none" fillRule="evenodd">
+                    <circle
+                      cx="28"
+                      cy="28"
+                      fill={bookmarked ? "hsl(176, 72%, 28%)" : "#2F2F2F"}
+                      r="28"
+                    />
+                    <path
+                      d="M23 19v18l5-5.058L33 37V19z"
+                      fill={bookmarked ? "hsl(176, 50%, 47%)" : "#B1B1B1"}
+                    />
+                  </g>
+                </svg>
+              </button>
+              <p className="hidden lg:block text-lg text-neutral-dark-gray font-medium">
+                Bookmark
+              </p>
+            </div>
           </div>
         </header>
 
-        <article className="bg-slate-100 shadow-md py-5 flex flex-col gap-8 items-center justify-center">
-          <StatCard
-            data={amountBacked.toLocaleString("en-US", {
-              style: "currency",
-              currency: "USD",
-              minimumFractionDigits: 0,
-              maximumFractionDigits: 0,
-            })}
-            desc="of $100,000 backed"
-          />
-          <StatCard
-            data={totalBackers.toLocaleString("en-US")}
-            desc="total backers"
-          />
-          <StatCard data={daysLeft} desc="days left" />
-          <div className="rounded-xl bg-slate-200 w-full h-4">
+        <article className="bg-slate-100 shadow-md py-5 flex flex-col gap-8 items-center lg:items-start lg:bg-slate-50 lg:shadow-none lg:w-11/12 lg:m-auto lg:mb-20">
+          <div className="flex flex-col gap-8 items-center justify-center lg:flex-row lg:gap-20">
+            <StatCard
+              data={amountBacked.toLocaleString("en-US", {
+                style: "currency",
+                currency: "USD",
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0,
+              })}
+              desc="of $100,000 backed"
+            />
+
+            <hr className="hidden lg:block border-[0.25px] border-text-dark-gray h-16" />
+
+            <StatCard
+              data={totalBackers.toLocaleString("en-US")}
+              desc="total backers"
+            />
+
+            <hr className="hidden lg:block border-[0.25px] border-text-dark-gray h-16" />
+
+            <StatCard data={daysLeft} desc="days left" />
+          </div>
+          <div className="rounded-xl bg-slate-200 w-full h-4 lg:w-5/6">
             <div
               className="bg-primary-moderate-cyan h-4 rounded-xl"
               style={{ width: `${(amountBacked * 100) / 100000}%` }}
@@ -86,21 +99,26 @@ function App() {
           </div>
         </article>
 
-        <article>
-          <h2 className="text-xl font-bold mb-5">About this project</h2>
-          <p className="mb-5 text-neutral-dark-gray">
+        <article className="lg:w-11/12 lg:m-auto">
+          <h2 className="text-xl font-bold mb-5 lg:text-2xl">
+            About this project
+          </h2>
+          <p className="mb-5 text-neutral-dark-gray lg:text-lg lg:leading-relaxed lg:mt-10">
             The Mastercraft Bamboo Monitor Riser is a sturdy and stylish
             platform that elevates your screen to a more comfortable viewing
             height. Placing your monitor at eye level has the potential to
             improve your posture and make you more comfortable while at work,
             helping you stay focused on the task at hand.
           </p>
-          <p className="text-neutral-dark-gray">
+          <p className="text-neutral-dark-gray lg:text-lg lg:leading-relaxed lg:mb-10">
             Featuring artisan craftsmanship, the simplicity of design creates
             extra desk space below your computer to allow notepads, pens, and
             USB sticks to be stored under the stand.
           </p>
-          <div className="mt-10 flex flex-col gap-5" id="selection">
+          <div
+            className="mt-10 flex flex-col gap-5 lg:gap-8 lg:mb-40"
+            id="selection"
+          >
             {pledges.map((pledge: infoReward) => (
               <Reward
                 key={pledge.id}
