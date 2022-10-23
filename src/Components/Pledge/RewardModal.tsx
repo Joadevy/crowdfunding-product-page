@@ -29,14 +29,14 @@ export const RewardModal: FC<props> = ({
   return (
     <Modal>
       <div className="fixed top-0 w-full h-full bg-[rgba(0,0,0,0.5)] overflow-y-auto z-20">
-        <article className="bg-slate-50 p-7 m-4 absolute top-32 bottom-4 rounded-lg overflow-y-scroll">
+        <article className="bg-slate-50 p-7 m-4 absolute top-32 bottom-4 rounded-lg overflow-y-scroll lg:right-0 lg:left-0 lg:top-10 lg:w-1/2 lg:m-auto lg:p-10">
           <h2 className="font-bold text-2xl mb-4">Back this project</h2>
-          <p className="text-neutral-dark-gray text-md mb-8">
+          <p className="text-neutral-dark-gray text-md mb-8 lg:text-lg lg:mb-12">
             Want to support us in bringing Mastercraft Bamboo Monitor Riser out
             in the world?
           </p>
           <button
-            className="absolute top-9 right-9"
+            className="absolute top-8 right-8"
             onClick={() => handleModal()}
             onKeyPress={() => handleModal()}
           >
