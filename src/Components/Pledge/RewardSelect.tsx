@@ -124,7 +124,7 @@ export const RewardSelect: FC<props> = ({
             className="flex gap-3 justify-center lg:justify-end"
           >
             <label
-              className="text-center w-5/12 outline-primary-moderate-cyan py-4 px-6 border-2 rounded-3xl flex gap-2 hover:border-primary-moderate-cyan lg:w-4/12"
+              className="text-center outline-primary-moderate-cyan py-4 px-6 lg:py-3 lg:px-2 border-2 rounded-3xl flex gap-2 hover:border-primary-moderate-cyan transition-colors"
               htmlFor="pledge"
             >
               $
@@ -139,7 +139,7 @@ export const RewardSelect: FC<props> = ({
             </label>
 
             <input
-              className="border-2 w-6/12 bg-primary-moderate-cyan text-slate-50 font-bold text-md py-4 px-6 rounded-3xl lg:w-4/12 hover:cursor-pointer hover:bg-primary-dark-cyan transition-colors"
+              className="border-2 bg-primary-moderate-cyan text-slate-50 font-bold text-md py-4 px-6 rounded-3xl lg:py-3 lg:px-4 hover:cursor-pointer hover:bg-primary-dark-cyan transition-colors"
               type="submit"
               value="Continue"
               onClick={(e) => handleSubmit(e)}
